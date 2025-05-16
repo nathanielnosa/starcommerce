@@ -46,15 +46,38 @@ class RegistrationSerializer(serializers.ModelSerializer):
         SendMail(email,profile.fullname)
         return profile
     
-# update user serializer
-class UpdateProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username', required=False)
-    email = serializers.EmailField(source='user.email', required=False)
-    class Meta:
-        model = Profile
-        fields = ['fullname','username','email','gender','phone','image']
+# # update user serializer
+# class UpdateProfileSerializer(serializers.ModelSerializer):
+#     username = serializers.CharField(source='user.username', required=False)
+#     email = serializers.EmailField(source='user.email', required=False)
+#     class Meta:
+#         model = Profile
+#         fields = ['fullname','username','email','gender','phone','image']
 
-    def update(self, instance, validated_data):
+#     def update(self, instance, validated_data):
+#         user_data = validated_data.pop('user',{})
+#         user = instance.user
+#         if 'username' in user_data:
+#             user.username = user_data['username']
+#         if 'email' in user_data:
+#             user.email = user_data['email']
+#         user.save()
+
+#         instance.fullname = validated_data.get('fullname')
+#         instance.gender = validated_data.get('gender')
+#         instance.phone = validated_data.get('phone')
+#         instance.image = validated_data.get('image')
+#         instance.save()
+        
+#         return instance
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username',required=False)
+    email = serializers.EmailField(source='user.email',required=False)
+    class Meta:
+        model =Profile
+        fields=['fullname','username','email','gender','phone','image']
+    def update(self,instance,validated_data):
         user_data = validated_data.pop('user',{})
         user = instance.user
         if 'username' in user_data:
@@ -62,12 +85,11 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         if 'email' in user_data:
             user.email = user_data['email']
         user.save()
-
+ 
         instance.fullname = validated_data.get('fullname')
         instance.gender = validated_data.get('gender')
         instance.phone = validated_data.get('phone')
         instance.image = validated_data.get('image')
         instance.save()
-        
-        return instance
     
+        return instance
