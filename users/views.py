@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
 from . models import Profile
-from . serializers import RegistrationSerializer, UserSerializer
+from . serializers import RegistrationSerializer, UserSerializer,UpdateProfileSerializer
 
 class RegisterView(APIView):
     def post(self,request):
@@ -52,3 +52,22 @@ class UserDashboardView(APIView):
         except Exception as e:
             return Response({"Error":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+class UpdateProfileView(APIView):
+    def get(self,request):
+        try:
+            profile = request.user.profile
+            serializers = UpdateProfileSerializer(profile)
+            return Response(serializers.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def post(self,request):
+        try:
+            Profile = request.user.profile
+            serializers = UpdateProfileSerializer(Profile,data=request.data)
+            if serializers.is_valid():
+                serializers.save()
+                return Response(serializers.data, status=status.HTTP_201_CREATED)
+            return Response(serializers.data, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"Error":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
