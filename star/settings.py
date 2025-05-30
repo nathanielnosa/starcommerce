@@ -71,6 +71,21 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# POSTGRESS
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'starCon',
+#         'USER': 'root',
+#         'PASSWORD': 'admin',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3305',
+#     }
+# }
+
+# # MYSQL
+
 
 
 # Password validation

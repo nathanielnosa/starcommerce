@@ -45,7 +45,7 @@ class Cart(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.profile.username} - {str(self.total)}'
+        return f'Cart - {str(self.total)}'
 
 
 # :::: CART PRODUCT MODEL :::::
